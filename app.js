@@ -1,0 +1,140 @@
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from "body-parser";
+import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
+const app = express();
+dotenv.config();
+app.use(bodyParser.urlencoded({extended: true}));
+const userDetailsSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: Object,
+});
+const userDet = mongoose.model("userDetails",userDetailsSchema);
+
+app.get('/',(req,res)=>{
+    res.render('login');
+});
+app.post('/signup',(req,res)=>{
+    bcrypt.hash(req.body.password, 10, function(err, hash) {
+        const signupVal = new userDet({
+            name: req.body.name,
+            email: req.body.email,
+            password: hash,
+        });
+        signupVal.save();
+        res.redirect('/');
+    });
+    
+})
+var name;
+app.post('/',(req,res)=>{
+    userDet.findOne({email: req.body.email},(err,user)=>{
+        name = user.name;
+        bcrypt.compare(req.body.password, user.password).then(function(result) {
+            if(result===true){
+                res.redirect("/home");
+                process.env.isLoged = "true";
+            }
+                else process.env.isLoged = "false";
+        });
+    });
+})
+app.set('view engine', 'ejs');
+app.get('/home',(req,res)=>{
+    if(process.env.isLoged != "true") res.redirect("/");
+    else res.render('index',{name: name})
+});
+
+
+app.use(express.static("public"));
+const addEventSchema = new mongoose.Schema({
+    adminEmail: String,
+    eventName: String,
+    eventDec: String,
+    eventCat: String,
+    eventStartDate: Date,
+    eventEndDate: Date,
+    regStartDate: Date,
+    regEndDate: Date,
+    collegeName: String,
+    city: String,
+    state: String,
+    zip: Number,
+    modeOfEvent: String,
+});
+const Event = mongoose.model("Event",addEventSchema);
+
+app.post("/addEvent",async(req,res)=>{
+    const v1 = new Event({
+        eventName: req.body.eventName,
+        eventDec: req.body.eventDec,
+        eventCat:req.body.eventCat,
+        eventStartDate: req.body.eventStartDate,
+        eventEndDate: req.body.eventEndDate,
+        regStartDate: req.body.regStartDate,
+        regEndDate: req.body.regEndDate,
+        collegeName: req.body.clgName,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        modeOfEvent: req.body.modeOfEvent
+    });
+    await v1.save();
+
+    res.redirect('/admin');
+})
+
+
+
+app.get('/admin',async (req,res)=>{
+    var EventDatas={
+        events: 0,
+        ongoing: 0,
+        Upcomming: 0,
+        completed: 0,
+    }
+    Event.find((err, docs) => {
+        if (!err) {
+            for(var i=0;i<docs.length;i++){
+            EventDatas.events=docs.length;
+            const today = new Date().getTime();
+            const eventStartDate=docs[i].eventStartDate.getTime();
+            const eventEndDate=docs[i].eventEndDate.getTime();
+                
+                if(eventStartDate < today && eventEndDate > today){
+                    const temp = EventDatas.ongoing;
+                    EventDatas.ongoing= temp+1;
+                }
+                else if(eventStartDate > today){
+                    const temp = EventDatas.Upcomming;
+                    EventDatas.Upcomming = temp+1;
+                }else if(eventEndDate<today){
+                    const temp = EventDatas.completed;
+                    EventDatas.completed = temp+1;
+                }
+                
+            }
+            console.log(EventDatas);
+
+            res.render('admin',{EventData: EventDatas});
+
+        } else {
+            console.log('Failed to retrieve the Course List: ' + err);
+        }
+    });
+
+});
+
+
+app.get('/logout',(req,res)=>{
+    process.env.isLoged = "false";
+    res.redirect('/');
+})
+
+const port = 5000 || process.env.PORT;
+mongoose.connect(process.env.URL, {useNewUrlParser : true, useUnifiedTopology: true})
+    .then( () => app.listen(port, () => console.log(`Serve running on port ${port}`)))
+    .catch((error)=>console.log(error));

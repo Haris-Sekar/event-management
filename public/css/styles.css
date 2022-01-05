@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Island+Moments&display=swap");
+body {
+  background-color: #222831;
+}
+#home-cover {
+  font-family: "Chakra Petch", sans-serif;
+  background-image: url("../images/pexels-pixabay-434337.jpg");
+  box-shadow: 0px 10px 10px 3px #1b1c1b;
+}
+.navbar-brand {
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.imgCon img {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 80px;
+  height: 80px;
+}
+.imgCon:hover {
+  cursor: pointer;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: -1;
+  opacity: 0;
+  transition: 1s all;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  background-color: #fff;
+  box-shadow: 0px 10px 10px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  padding: 0px 70px;
+  background-color: #fff;
+}
+.navbar-logo {
+  color: #001219;
+  text-decoration: none;
+  font-size: 60px;
+  padding: 5px 5px;
+  font-family: "Island Moments", cursive;
+}
+.navbar-links {
+  list-style-type: none;
+  display: flex;
+}
+.navbar-links li a {
+  display: block;
+  text-decoration: none;
+  color: #444;
+  padding: 20px 20px;
+  font-weight: 700;
+  transition: 0.4s all;
+}
+
+.navbar-links li.navbar-dropdown {
+  position: relative;
+}
+
+.navbar-links li.navbar-dropdown:hover .dropdown {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.navbar-links li.navbar-dropdown .dropdown {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  padding: 20px 0;
+  top: 100%;
+  transform: translateY(50px);
+  left: 0;
+  width: 250px;
+  background-color: #fff;
+  box-shadow: 0px 10px 10px 3px rgba(0, 0, 0, 0.3);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  z-index: 111;
+  transition: 0.4s all;
+}
+.navbar-links li.navbar-dropdown .dropdown a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 400;
+}
+.navbar-dropdown .dropdown a:hover {
+  padding-left: 30px;
+}
+.navbar-links li a:hover {
+  color: #ff3f34;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+  /* background-color: #f00; */
+  background-image: url("http://lorempixel.com/1366/698/food/");
+  background-size: cover;
+}
+
+.header-inner {
+  text-align: center;
+  color: #ff3f34;
+  text-shadow: 0px 10px 10px rgba(0, 0, 0, 0.8);
+}
+
+.header-inner h1 {
+  font-family: "Great Vibes", cursive;
+  font-size: 130px;
+}
+
+.header-inner form input[type="search"] {
+  position: relative;
+  width: 500px;
+  border: none;
+  padding: 15px;
+  border-radius: 27px;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.3);
+  z-index: 11;
+}
+.header-inner form input[type="search"]:focus {
+  outline: none;
+}
+
+.header-inner form input[type="search"]:focus + div {
+  z-index: 1;
+  opacity: 1;
+}
+
+::placeholder {
+  color: #666;
+  font-weight: 400;
+}
+
+.card {
+  margin-top: 100px;
+  width: 70%;
+  height: 70%;
+  max-height: 300px;
+  padding: auto;
+  text-align: center;
+  background: #242625;
+  border-radius: 10px;
+  box-shadow: 25px 25px 50px #1b1c1b, -25px -25px 50px #2d302f;
+}
+.card__container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  color: white;
+}
+.card__content {
+  width: 90%;
+  height: 95%;
+  background: #191a19;
+  margin: 10px auto;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 16px 16px 44px #0a0a0a, -16px -16px 44px #282a28;
+  transition: 0.3s all ease-in-out;
+}
+.card__content:hover {
+  margin-top: -10px;
+}
+.card__header {
+  /* text-transform: uppercase; */
+  font-size: 20px;
+  margin: 40px auto;
+}
+.left
+{
+    color: white;
+    text-align: center;
+    margin-top: 180px;
+}
+#logbutton
+ {
+     border-radius: 30px;
+     width: 150px;
+    
+}
+#sigbutton
+ {
+     border-radius: 30px;
+     width: 150px;
+    
+}
+#inp
+{
+    border-radius: 30px;
+}
+.signup
+{
+   
+   padding: 60px;
+   margin-left: 50px;
+   margin-right: 50px;
+   
+}
+button#logbutton:hover {
+    background-color:#58D68D ;
+  }
+  button#sigbutton:hover {
+    background-color:#f75959 ;
+  }
