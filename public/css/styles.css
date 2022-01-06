@@ -95,6 +95,9 @@ body {
   padding-bottom: 10px;
   font-weight: 400;
 }
+a:hover{
+  text-decoration: none;
+}
 .navbar-dropdown .dropdown a:hover {
   padding-left: 30px;
 }

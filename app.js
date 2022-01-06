@@ -22,7 +22,7 @@ app.post('/signup',(req,res)=>{
         const signupVal = new userDet({
             name: req.body.name,
             email: req.body.email,
-            password: hash,
+            password: hash
         });
         signupVal.save();
         res.redirect('/');
@@ -30,15 +30,19 @@ app.post('/signup',(req,res)=>{
     
 })
 var name;
+var email;
 app.post('/',(req,res)=>{
     userDet.findOne({email: req.body.email},(err,user)=>{
         name = user.name;
+        email = req.body.email;
         bcrypt.compare(req.body.password, user.password).then(function(result) {
             if(result===true){
+                process.env.isLoged = "true";   
                 res.redirect("/home");
-                process.env.isLoged = "true";
             }
-                else process.env.isLoged = "false";
+                else{
+                    
+                }
         });
     });
 })
@@ -60,15 +64,18 @@ const addEventSchema = new mongoose.Schema({
     regStartDate: Date,
     regEndDate: Date,
     collegeName: String,
+    categories: String,
     city: String,
     state: String,
     zip: Number,
     modeOfEvent: String,
+    registered: String,
 });
 const Event = mongoose.model("Event",addEventSchema);
 
 app.post("/addEvent",async(req,res)=>{
     const v1 = new Event({
+        adminEmail:"sharis14003@gmail.com",
         eventName: req.body.eventName,
         eventDec: req.body.eventDec,
         eventCat:req.body.eventCat,
@@ -77,6 +84,7 @@ app.post("/addEvent",async(req,res)=>{
         regStartDate: req.body.regStartDate,
         regEndDate: req.body.regEndDate,
         collegeName: req.body.clgName,
+        categories: req.body.categories,
         city: req.body.city,
         state: req.body.state,
         zip: req.body.zip,
@@ -88,6 +96,15 @@ app.post("/addEvent",async(req,res)=>{
 })
 
 
+const addEventReg = new mongoose.Schema({
+    eventID: String,
+    name: String,
+    email: String,
+    phone: Number,
+    rollNumber: String
+
+});
+const EventReg = mongoose.model("EventRegistrationDetails",addEventReg);
 
 app.get('/admin',async (req,res)=>{
     var EventDatas={
@@ -127,13 +144,150 @@ app.get('/admin',async (req,res)=>{
     });
 
 });
+app.get("/allEvents",(req,res)=>{
+    Event.find((err,docs)=>{
+        if(err) console.log(err);
+        else{
+            EventReg.find({email : email},(err,data)=>{
+                if(err) console.log(err);
+                else{
+                    console.log(data);
+                }            
+                for(let i=0;i<docs.length;i++){
+                    for(let j=0;j<data.length;j++){
+                        if(docs[i].id === data[j].eventID) {
+                            docs[i].registered = "true";
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+                console.log(docs);
+                res.render('allEvents',{name: name,EventData: docs,registerEvents: data});
 
-
+            })
+        }
+    })
+    
+})
 app.get('/logout',(req,res)=>{
     process.env.isLoged = "false";
     res.redirect('/');
 })
 
+
+app.post('/eventReg',(req,res)=>{
+    const EventRegDetails = new EventReg({
+        eventID: req.body.eventId,
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        rollNumber: req.body.roll,
+    });
+    EventRegDetails.save();
+
+    res.redirect('/home');
+})
+
+
+app.get("/upcomingEvent",(req,res)=>{
+    Event.find((err,docs)=>{
+        if(err) console.log(err);
+        else{
+            EventReg.find({email : email},(err,data)=>{
+                if(err) console.log(err);
+                else{
+                    console.log(data);
+                }            
+                for(let i=0;i<docs.length;i++){
+                    for(let j=0;j<data.length;j++){
+                        if(docs[i].id === data[j].eventID) {
+                            docs[i].registered = "true";
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+                console.log(docs);
+                res.render('upcomingEvents',{name: name,EventData: docs,registerEvents: data});
+
+            })
+        }
+    })
+})
+
+app.get("/liveEvents",(req,res)=>{
+    Event.find((err,docs)=>{
+        if(err) console.log(err);
+        else{
+            EventReg.find({email : email},(err,data)=>{
+                if(err) console.log(err);
+                for(let i=0;i<docs.length;i++){
+                    for(let j=0;j<data.length;j++){
+                        if(docs[i].id === data[j].eventID) {
+                            docs[i].registered = "true";
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+                console.log(docs);
+                res.render('liveEvents',{name: name,EventData: docs,registerEvents: data});
+
+            })
+        }
+    })
+})
+
+app.get("/endedEvents",(req,res)=>{
+    Event.find((err,docs)=>{
+        if(err) console.log(err);
+        else{
+            EventReg.find({email : email},(err,data)=>{
+                if(err) console.log(err);            
+                for(let i=0;i<docs.length;i++){
+                    for(let j=0;j<data.length;j++){
+                        if(docs[i].id === data[j].eventID) {
+                            docs[i].registered = "true";
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+                console.log(docs);
+                res.render('endedEvent',{name: name,EventData: docs,registerEvents: data});
+            })
+        }
+    })
+});
+
+
+app.get('/regEvents',(req,res)=>{
+    Event.find((err,docs)=>{
+        if(err) console.log(err);
+        else{
+            EventReg.find({email : email},(err,data)=>{
+                if(err) console.log(err);            
+                for(let i=0;i<docs.length;i++){
+                    for(let j=0;j<data.length;j++){
+                        if(docs[i].id === data[j].eventID) {
+                            docs[i].registered = "true";
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+                console.log(docs);
+                res.render('regEvents',{name: name,EventData: docs,registerEvents: data});
+            })
+        }
+    })
+})
 const port = 5000 || process.env.PORT;
 mongoose.connect(process.env.URL, {useNewUrlParser : true, useUnifiedTopology: true})
     .then( () => app.listen(port, () => console.log(`Serve running on port ${port}`)))

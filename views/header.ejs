@@ -29,16 +29,22 @@
 
 <body>
     <nav class="navbar">
-        <p class="navbar-logo">Event Management </p>
+        <a href="/home"><p class="navbar-logo">Event Management</p></a>
         <ul class="navbar-links">
             <li class="navbar-dropdown">
-                <a href="#">Events</a>
+                <a href="#"><%= name %></a>
                 <div class="dropdown">
-                    <a href="#" class="dropdown-item">Upcomming Events</a>
-                    <a href="#" class="dropdown-item">Live Events</a>
-                    <a href="#" class="dropdown-item">Ongoing Events</a>
-                    <a href="#" class="dropdown-item">Ended Events</a>
-                    <a href="#" class="dropdown-item">Registered Events</a>
+                    <a href="#" class="dropdown-item">Your Account</a>
+                    <a href="/logout" class="dropdown-item">Logout</a>
+                </div>
+            </li>
+            <li class="navbar-dropdown">
+                <a href="/allEvents">Events</a>
+                <div class="dropdown">
+                    <a href="/upcomingEvent" class="dropdown-item">Upcomming Events</a>
+                    <a href="/liveEvents" class="dropdown-item">Live Events</a>
+                    <a href="/endedEvents" class="dropdown-item">Ended Events</a>
+                    <a href="/regEvents" class="dropdown-item">Registered Events</a>
                 </div>
             </li>
             <li class="navbar-dropdown">
@@ -59,13 +65,7 @@
             <li class="navbar-dropdown">
                 <a href="#">About</a>
             </li>
-            <li class="navbar-dropdown">
-                <a href="#"><%= name %></a>
-                <div class="dropdown">
-                    <a href="#" class="dropdown-item">Your Account</a>
-                    <a href="/logout" class="dropdown-item">Logout</a>
-                </div>
-            </li>
+            
         </ul>
     </nav>
     
