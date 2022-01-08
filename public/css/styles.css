@@ -1,13 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Island+Moments&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
 
+html{
+  scroll-behavior: smooth;
 
+}
 body {
   background-color: #222831;
   overflow-x: hidden;
+  transition: 0.3s ease-in-out;
 }
 #home-cover {
   font-family: "Chakra Petch", sans-serif;
@@ -239,6 +244,8 @@ button#logbutton:hover {
   font-family: 'Anonymous Pro', monospace;
     margin: 50px 10px 0 10px;
     height: 500px;
+    box-shadow: 10px 10px 10px 3px rgba(87, 84, 84, 0.933);
+
 
   }
   .explore h1{
@@ -272,8 +279,15 @@ button#logbutton:hover {
     /* right: 10px; */
     float: right;
     animation: 2s ease-in-out 0s 1 fade;
+    position:absolute;
+    right: 20px;
     
   }
+  .explore div{
+    display: flex;
+    margin: auto;
+  }
+
   .explore button{
     border: none;
     background-color: #e63946;
@@ -282,7 +296,6 @@ button#logbutton:hover {
     color: white;
     text-align: center;
     margin: auto;
-    display: flex;
     border-radius: 10px;
     transition: 0.5s transform ease-in-out;
   }
@@ -304,4 +317,67 @@ button#logbutton:hover {
     100%{
         opacity: 1;
     }
+}
+.about{
+    border: 2px solid #eeee;
+    background-color: #eeee;
+    border-radius: 15px;
+    /* font-family: 'Anonymous Pro', monospace; */
+    margin: 50px 10px 0 10px;
+    height: 500px;
+    box-shadow: 10px 10px 10px 3px rgba(87, 84, 84, 0.933);
+    /* text-align: center; */
+}
+.about #title{
+  font-family: 'Abril Fatface', cursive;
+  width: fit-content;
+  font-size: 50px;
+  margin: auto;
+  margin-top: 50px;
+
+}
+.about #content{
+  padding: 100px;
+  padding-bottom: 0px;
+  font-size: 25px;
+}
+.about #connect{
+  font-size: 25px;
+  padding: 50px 0 0 100px;
+  padding-bottom: 0px;
+  
+}
+.contact{
+  border: 2px solid #eeee;
+    background-color: #eeee;
+    border-radius: 15px;
+    /* font-family: 'Anonymous Pro', monospace; */
+    margin: 50px 10px 0 10px;
+    height: 350px;
+    box-shadow: 10px 10px 10px 3px rgba(87, 84, 84, 0.933);
+    font-size: 25px;
+    
+}
+#flexDiv{
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  /* align-items: center; */
+  align-content: center;
+}
+#flexDiv div{
+  margin: 20px;
+  /* padding: 70px 0; */
+  /* border: 2px solid transparent; */
+  padding-right: 50px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+}
+#flexDiv div ul li{
+  margin-top: 10px;
+}
+#flexDiv div ul{
+  list-style-type: none;
 }

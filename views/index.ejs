@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
     <%- include('home_header') %>
     <div class="jumbotron jumbotron-fluid" id="home-cover">
@@ -18,16 +25,49 @@
         </div>
     </div>
     <div class="explore">
-        <h1><span class="type" style="--n:84">Explore the wide range of events held by the colleges <br> in diffrent feilds and modes</span></h1>
-        <a href="/allEvents"><button>Explore Now!</button></a>
+        <h1><span class="type" style="--n:83">Explore the wide range of events held by the colleges <br> in diffrent
+                feilds and modes</span></h1>
+        <div style="width: fit-content;"><a href="/allEvents" ><button>Explore Now!</button></a></div>
         <img src="/images/pngegg.png" alt="asdf" srcset="">
 
     </div>
     <div class="about" id="aboutus">
-        
+        <p id="title">About us</p>
+        <p id="content">We are a profesional body where we organize all the events condected by various organization
+            and institutions where you can explore and know about their fests and events and participate and spread
+            your skills and knowledege to the world. We Categories the events like
+            Technical, Non-Technical, Sports, Culturals, Seminar, Workshops, PPT. You can see through all the events like
+            live events, ended events, upcomming events. We have provided a basic regisration form where you can
+            submit you details and register you events.
+        </p>
+        <p id="connect"> To Post you own organization or institution events <a href=""> Connect Now!</a></p>
     </div>
 
-
+    <div class="contact" id="contact">
+        <div id="flexDiv">
+            <div>
+                <ul style="font-size: 20px;">
+                    <li><a href="/catEve?name=Technical"><i class="fas fa-greater-than"></i> Technical</a></li>
+                    <li><a href="/catEve?name=Non-Technical"><i class="fas fa-greater-than"></i> Non-Technical</a></li>
+                    <li><a href="/catEve?name=Sports"><i class="fas fa-greater-than"></i> Sports</a></li>
+                    <li><a href="/catEve?name=Culturals"><i class="fas fa-greater-than"></i> Culturals</a></li>
+                    <li><a href="/catEve?name=Seminar"><i class="fas fa-greater-than"></i> Seminar</a></li>
+                    <li><a href="/catEve?name=Workshop"><i class="fas fa-greater-than"></i> Workshop</a></li>
+                    <li><a href="/catEve?name=PPT"><i class="fas fa-greater-than"></i> PPT</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="far fa-building"></i> Event Management</li>
+                    <li><i class="fas fa-business-time"></i> Mon-Sat / 10 AM - 7 PM</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 xxxxx xxxx</li>
+                    <li><i class="fas fa-user-friends"></i> Kongu Engneering College</li>
+                    <li><i class="fas fa-envelope"></i> sharis14003@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 </body>
+
 </html>

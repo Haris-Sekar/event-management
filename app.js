@@ -167,7 +167,6 @@ app.get('/admin',async (req,res)=>{
                 }
                 
             }
-            console.log(EventDatas);
 
             res.render('admin/admin',{adminEmail: adminEmail,EventData: EventDatas});
 
@@ -184,7 +183,7 @@ app.get("/allEvents",(req,res)=>{
             EventReg.find({email : email},(err,data)=>{
                 if(err) console.log(err);
                 else{
-                    console.log(data);
+                    // console.log(data);
                 }            
                 for(let i=0;i<docs.length;i++){
                     for(let j=0;j<data.length;j++){
@@ -196,7 +195,7 @@ app.get("/allEvents",(req,res)=>{
                         }
                     }
                 }
-                console.log(docs);
+                // console.log(docs);
                 res.render('allEvents',{name: name,EventData: docs,registerEvents: data});
 
             })
@@ -235,7 +234,7 @@ app.get("/upcomingEvent",(req,res)=>{
             EventReg.find({email : email},(err,data)=>{
                 if(err) console.log(err);
                 else{
-                    console.log(data);
+                    // console.log(data);
                 }            
                 for(let i=0;i<docs.length;i++){
                     for(let j=0;j<data.length;j++){
@@ -247,7 +246,7 @@ app.get("/upcomingEvent",(req,res)=>{
                         }
                     }
                 }
-                console.log(docs);
+                // console.log(docs);
                 res.render('upcomingEvents',{name: name,EventData: docs,registerEvents: data});
 
             })
@@ -271,7 +270,7 @@ app.get("/liveEvents",(req,res)=>{
                         }
                     }
                 }
-                console.log(docs);
+                // console.log(docs);
                 res.render('liveEvents',{name: name,EventData: docs,registerEvents: data});
 
             })
@@ -295,7 +294,7 @@ app.get("/endedEvents",(req,res)=>{
                         }
                     }
                 }
-                console.log(docs);
+                // console.log(docs);
                 res.render('endedEvent',{name: name,EventData: docs,registerEvents: data});
             })
         }
@@ -319,7 +318,7 @@ app.get('/regEvents',(req,res)=>{
                         }
                     }
                 }
-                console.log(docs);
+                // console.log(docs);
                 res.render('regEvents',{name: name,EventData: docs,registerEvents: data});
             })
         }
@@ -327,17 +326,34 @@ app.get('/regEvents',(req,res)=>{
 });
 
 app.get('/catEve',(req,res)=>{
-    console.log(req.query);
     Event.find({categories:req.query.name},(err,docs)=>{
         if(err) console.log(err);
         else{
-            res.render('categories_events',{name: name,EventData: docs,categorie: req.query.name});
+            EventReg.find({email : email},(err,data)=>{
+                if(err) console.log(err);
+                else{
+                    // console.log(data);
+                }            
+                for(let i=0;i<docs.length;i++){
+                    for(let j=0;j<data.length;j++){
+                        if(docs[i].id === data[j].eventID) {
+                            docs[i].registered = "true";
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                }
+                res.render('categories_events',{name: name,EventData: docs,categorie: req.query.name});
+
+            })
         }
     })
 })
 
 
 app.get('/adminEvents',(req,res)=>{
+    
     Event.find({adminEmail: adminEmail},(err,data)=>{
         if(err) console.log(err);
         else{
