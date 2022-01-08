@@ -16,7 +16,9 @@
             overflow-x: hidden;
 
         }
+
         /* HEADING */
+
         .heading {
             text-align: center;
         }
@@ -200,55 +202,59 @@
     </style>
 <div class="main-container">
     <div class="heading">
-        <h1 class="heading__title">Ended Events</h1>
+        <h1 class="heading__title"><%= categorie%> Events</h1>
     </div>
     <div class="cards1">
-
         <% for(var i=0;i<EventData.length;i++){ 
-            const today=new Date().getTime(); 
-            const eventStartDate=EventData[i].eventStartDate.getTime(); 
-            const eventEndDate=EventData[i].eventEndDate.getTime(); 
+            const today=new Date().getTime();
             const eventRegStartDate=EventData[i].regStartDate.getTime(); 
-            const eventRegEndDate=EventData[i].regEndDate.getTime(); 
-            var type; 
-            var reg; 
-            if(eventRegStartDate>=today && eventRegEndDate>=today) reg = 1;
+            const eventRegEndDate=EventData[i].regEndDate.getTime(); var type; 
+            var reg=0; 
+            if(eventRegStartDate>= today && eventRegEndDate>=today) reg = 1;
             else if(eventRegEndDate>=today) reg=1;
-            else reg=0;
-            if(eventStartDate < today && eventEndDate> today){
-                type="Current";
-            }
-            else if(eventStartDate > today){
-                type = "Upcoming";
-            }else if(eventEndDate<today){ type="Ended" ; } %>
-                <% if(type==="Ended" ){%>
-                        <div class="card card-3" id="">
-                            <span id="tit" style="text-align: left;">
-                                <%=type %> Event, <%= EventData[i].categories%>
-                            </span>
-                            <span id="tit" style="text-align: left;">Event Date: <%=
-                                    EventData[i].eventStartDate.toLocaleDateString() %> - <%=
-                                        EventData[i].eventEndDate.toLocaleDateString() %> <br> Registeration Date:
-                                        <%= EventData[i].regStartDate.toLocaleDateString() %> - <%=
-                                                EventData[i].regEndDate.toLocaleDateString() %></span>
-                            <span id="tit" style="text-align: left;"></span>
+            else reg=0;%>
+                <div class="card card-1" id="">
+                    <span id="tit" style="text-align: left;">
+                        <%=type %> Event, <%= EventData[i].categories%>
+                    </span>
+                    <span id="tit" style="text-align: left;">Event Date: <%=
+                            EventData[i].eventStartDate.toLocaleDateString() %> - <%=
+                                EventData[i].eventEndDate.toLocaleDateString() %> <br> Registeration Date:
+                                <%= EventData[i].regStartDate.toLocaleDateString() %> - <%=
+                                        EventData[i].regEndDate.toLocaleDateString() %></span>
+                    <span id="tit" style="text-align: left;"></span>
 
-                            <!-- <div class="card__icon"> <i class="fas fa-bolt"><</i></div> -->
-                            <h2 class="card__title">
-                                <%= EventData[i].eventName%> <br>
-                                    <span id="college">
-                                        <%= EventData[i].eventDec%>
-                                    </span><br>
-                                    <span id="college">Organized by: <%= EventData[i].collegeName%></span><br>
-                                    <span id="college">
-                                        <%= EventData[i].modeOfEvent%> Event
-                                    </span><br>
-                                    <span id="college">
-                                        <%= EventData[i].city%>,<%= EventData[i].state%>
-                                    </span><br>
+                    <!-- <div class="card__icon"> <i class="fas fa-bolt"><</i></div> -->
+                    <h2 class="card__title">
+                        <%= EventData[i].eventName%> <br>
+                            <span id="college">
+                                <%= EventData[i].eventDec%>
+                            </span><br>
+                            <span id="college">Organized by: <%= EventData[i].collegeName%></span><br>
+                            <span id="college">
+                                <%= EventData[i].modeOfEvent%> Event
+                            </span><br>
+                            <span id="college">
+                                <%= EventData[i].city%>,<%= EventData[i].state%>
+                            </span><br>
 
-                            </h2>
+                    </h2>
+                    <% 
+                    if(EventData[i].registered==="true"){%>
+                        <p class="">
+                            <button class="card__apply__closed" disabled>Registered</button>
+                        </p>
+                    <%} else if(reg===1){%>
+                        <button type="button" class="card__apply" data-toggle="modal"
+                            data-target="#exampleModal" data-whatever="<%= EventData[i].id%>">
+                            Register Now
+                        </button>
+                        <%} else{%>
+                            <p class="">
+                                <button class="card__apply__closed" disabled>Registeration Closed </button>
+                            </p>
+                            <% } %>
                         </div>
-                        <%}}%>
+                        <%}%>
     </div>
     </div>

@@ -1,7 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Island+Moments&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
+
+
 body {
   background-color: #222831;
+  overflow-x: hidden;
 }
 #home-cover {
   font-family: "Chakra Petch", sans-serif;
@@ -224,3 +230,78 @@ button#logbutton:hover {
   button#sigbutton:hover {
     background-color:#f75959 ;
   }
+
+  .explore{
+    /* width: ; */
+    border: 2px solid #eeee;
+    background-color: #eeee;
+    border-radius: 15px;
+  font-family: 'Anonymous Pro', monospace;
+    margin: 50px 10px 0 10px;
+    height: 500px;
+
+  }
+  .explore h1{
+    font-size: 30px;
+    margin: 50px;
+  }
+  .type {
+    color:#0000;
+    background:
+      linear-gradient(-90deg,#ffffff 5px,#0000 0) 10px 0,
+      linear-gradient(#000000 0 0) 0 0;
+    background-size:calc(var(--n)*1ch) 300%;
+    -webkit-background-clip:padding-box,text;
+    background-clip:padding-box,text;
+    background-repeat:no-repeat;
+    animation: 
+     b .7s infinite steps(1),   
+     t calc(var(--n)*.3s) steps(var(--n)) forwards;
+  }
+  
+  @keyframes t{
+    from {background-size:0 200%}
+  }
+  @keyframes b{
+    50% {background-position:0 -100%,0 0}
+  }
+
+  .explore img{
+    width: 400px;
+    height: 400px;
+    /* right: 10px; */
+    float: right;
+    animation: 2s ease-in-out 0s 1 fade;
+    
+  }
+  .explore button{
+    border: none;
+    background-color: #e63946;
+    padding: 10px;
+    font-size: 25px;
+    color: white;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    border-radius: 10px;
+    transition: 0.5s transform ease-in-out;
+  }
+  .explore button:hover{
+    transform: scale(1.1);
+  }
+  @keyframes fade{
+    0%{
+        /* float: left; */
+        /* bottom: 10px; */
+        margin-top: 500px;
+        margin-right: 700px;
+        opacity: 0;
+    }
+    50%{
+      margin-left: 700px;
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
+}

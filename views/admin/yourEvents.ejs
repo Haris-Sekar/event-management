@@ -4,7 +4,7 @@
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
 </head>
 
-<%- include('header'); %>
+<%- include('adminHeader'); %>
     <style>
         body {
             overflow-x: hidden;
@@ -233,6 +233,8 @@
 
                         <% if(type==="Current" ){%>
                             <div class="card card-1" id="">
+                                <span style="text-align: right; font-size: 20px;"><i style="padding: 10px;" class="fas fa-trash"></i><i class="far fa-edit"></i></span>
+
                                 <span id="tit" style="text-align: left;">
                                     <%=type %> Event, <%= EventData[i].categories%>
                                 </span>
@@ -258,21 +260,6 @@
                                         </span><br>
 
                                 </h2>
-                                <% 
-                                if(EventData[i].registered==="true"){%>
-                                    <p class="">
-                                        <button class="card__apply__closed" disabled>Registered</button>
-                                    </p>
-                                <%} else if(reg===1){%>
-                                    <button type="button" class="card__apply" data-toggle="modal"
-                                        data-target="#exampleModal" data-whatever="<%= EventData[i].id%>">
-                                        Register Now
-                                    </button>
-                                    <%} else{%>
-                                        <p class="">
-                                            <button class="card__apply__closed" disabled>Registeration Closed </button>
-                                        </p>
-                                        <% } %>
                             </div>
                             <%}}%>
         </div>
@@ -297,16 +284,18 @@
 
                         <% if(type==="Upcoming" ){%>
                             <div class="card card-2" id="">
+                                <span style="text-align: right; font-size: 20px;"><i class="far fa-edit"></i></span>
+
                                 <span id="tit" style="text-align: left;">
                                     <%=type %> Event, <%= EventData[i].categories%>
                                 </span>
+
                                 <span id="tit" style="text-align: left;">Event Date: <%=
                                         EventData[i].eventStartDate.toLocaleDateString() %> - <%=
                                             EventData[i].eventEndDate.toLocaleDateString() %> <br> Registeration Date:
                                             <%= EventData[i].regStartDate.toLocaleDateString() %> - <%=
                                                     EventData[i].regEndDate.toLocaleDateString() %></span>
                                 <span id="tit" style="text-align: left;"></span>
-
                                 <!-- <div class="card__icon"> <i class="fas fa-bolt"><</i></div> -->
                                 <h2 class="card__title">
                                     <%= EventData[i].eventName%> <br>
@@ -322,21 +311,7 @@
                                         </span><br>
 
                                 </h2>
-                                <% 
-                                if(EventData[i].registered==="true"){%>
-                                    <p class="">
-                                        <button class="card__apply__closed" disabled>Registered</button>
-                                    </p>
-                                <%} else if(reg===1){%>
-                                    <button type="button" class="card__apply" data-toggle="modal"
-                                        data-target="#exampleModal" data-whatever="<%= EventData[i].id%>">
-                                        Register Now
-                                    </button>
-                                    <%} else{%>
-                                        <p class="">
-                                            <button class="card__apply__closed" disabled>Registeration Closed </button>
-                                        </p>
-                                        <% } %>
+                                
                             </div>
                             <%}}%>
         </div>
@@ -392,3 +367,9 @@
                             <%}}%>
         </div>
     </div>
+
+
+    <%- include('registerForm'); %> 
+
+
+

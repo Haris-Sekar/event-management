@@ -34,10 +34,17 @@
         <p class="navbar-logo">Event Management </p>
         <ul class="navbar-links">
             <li class="navbar-dropdown">
+                <a href="#"><%= adminEmail %></a>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-item">Your Account</a>
+                    <a href="/adminLogout" class="dropdown-item">Logout</a>
+                </div>
+            </li>
+            <li class="navbar-dropdown">
                 <a href="#">Events</a>
                 <div class="dropdown">
                     <a href="#" class="dropdown-item" data-toggle="modal" data-target="#addevent">Add Event</a>
-                    <a href="#" class="dropdown-item">Your Event</a>
+                    <a href="/adminEvents" class="dropdown-item">Your Event</a>
                     <a href="/admin/upcoming" class="dropdown-item">Upcomming Events</a>
                     <a href="/admin/live" class="dropdown-item">Live Events</a>
                     <a href="/admin/ended" class="dropdown-item">Ended Events</a>

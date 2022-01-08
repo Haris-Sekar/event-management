@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 import bodyParser from "body-parser";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 const saltRounds = 10;
 const app = express();
 dotenv.config();
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 const userDetailsSchema = new mongoose.Schema({
     name: String,
@@ -13,9 +15,39 @@ const userDetailsSchema = new mongoose.Schema({
     password: Object,
 });
 const userDet = mongoose.model("userDetails",userDetailsSchema);
+const adminDet = new mongoose.Schema({
+    email: String,
+    password: String,
+});
+
+
+// const v1 = new 
+
+
+const adminDetails = mongoose.model("admindetails",adminDet);
+app.get('/adminLogin',(req,res)=>{
+    res.render('admin/adminLogin');
+});
+var adminEmail;
+app.post('/adminLogin',(req,res)=>{
+    adminDetails.findOne({email: req.body.email},(err,user)=>{
+        adminEmail = req.body.email;
+        bcrypt.compare(req.body.password, user.password).then(function(result) {
+            if(result===true){
+                process.env.isAdminLoged = "true";   
+                res.redirect("/admin");
+            }
+                else{
+                    
+                }
+        });
+    });
+})
 
 app.get('/',(req,res)=>{
     res.render('login');
+
+
 });
 app.post('/signup',(req,res)=>{
     bcrypt.hash(req.body.password, 10, function(err, hash) {
@@ -46,7 +78,6 @@ app.post('/',(req,res)=>{
         });
     });
 })
-app.set('view engine', 'ejs');
 app.get('/home',(req,res)=>{
     if(process.env.isLoged != "true") res.redirect("/");
     else res.render('index',{name: name})
@@ -75,7 +106,7 @@ const Event = mongoose.model("Event",addEventSchema);
 
 app.post("/addEvent",async(req,res)=>{
     const v1 = new Event({
-        adminEmail:"sharis14003@gmail.com",
+        adminEmail:adminEmail,
         eventName: req.body.eventName,
         eventDec: req.body.eventDec,
         eventCat:req.body.eventCat,
@@ -104,7 +135,9 @@ const addEventReg = new mongoose.Schema({
     rollNumber: String
 
 });
+
 const EventReg = mongoose.model("EventRegistrationDetails",addEventReg);
+
 
 app.get('/admin',async (req,res)=>{
     var EventDatas={
@@ -136,7 +169,7 @@ app.get('/admin',async (req,res)=>{
             }
             console.log(EventDatas);
 
-            res.render('admin',{EventData: EventDatas});
+            res.render('admin/admin',{adminEmail: adminEmail,EventData: EventDatas});
 
         } else {
             console.log('Failed to retrieve the Course List: ' + err);
@@ -174,6 +207,10 @@ app.get("/allEvents",(req,res)=>{
 app.get('/logout',(req,res)=>{
     process.env.isLoged = "false";
     res.redirect('/');
+})
+app.get('/adminLogout',(req,res)=>{
+    process.env.isAdminLoged = "false";
+    res.redirect('/adminLogin');
 })
 
 
@@ -287,7 +324,29 @@ app.get('/regEvents',(req,res)=>{
             })
         }
     })
+});
+
+app.get('/catEve',(req,res)=>{
+    console.log(req.query);
+    Event.find({categories:req.query.name},(err,docs)=>{
+        if(err) console.log(err);
+        else{
+            res.render('categories_events',{name: name,EventData: docs,categorie: req.query.name});
+        }
+    })
 })
+
+
+app.get('/adminEvents',(req,res)=>{
+    Event.find({adminEmail: adminEmail},(err,data)=>{
+        if(err) console.log(err);
+        else{
+            res.render('admin/yourEvents',{adminEmail:adminEmail,EventData: data});
+        }
+    })
+})
+
+app.post
 const port = 5000 || process.env.PORT;
 mongoose.connect(process.env.URL, {useNewUrlParser : true, useUnifiedTopology: true})
     .then( () => app.listen(port, () => console.log(`Serve running on port ${port}`)))
