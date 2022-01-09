@@ -9,6 +9,7 @@ const app = express();
 dotenv.config();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+
 const userDetailsSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -19,11 +20,6 @@ const adminDet = new mongoose.Schema({
     email: String,
     password: String,
 });
-
-
-// const v1 = new 
-
-
 const adminDetails = mongoose.model("admindetails",adminDet);
 app.get('/adminLogin',(req,res)=>{
     res.render('admin/adminLogin');
