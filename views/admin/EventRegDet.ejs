@@ -1,0 +1,28 @@
+<%- include('adminHeader'); %>
+<h3 style="color: white; text-align:center; margin: 50px;" >Event Registered user Data</h3>
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Roll Number</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0;i<regDet.length;i++){%>
+          <tr>
+            <th scope="row"><%= i+1 %></th>
+            <td><%= regDet[i].name %></td>
+            <td><%= regDet[i].email %></td>
+            <td><%= regDet[i].phone %></td>
+            <td><%= regDet[i].rollNumber %></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+<div class="download">Download the details as Excel file <br> <a href="<%= path%>" download class="btn btn-primary"> Download</a></div> 
+    
+</body>
+</html>
