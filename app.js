@@ -285,7 +285,7 @@ app.get("/upcomingEvent",(req,res)=>{
 
     Event.find((err,docs)=>{
         if(err) console.log(err);
-        else if(docs.length===0) res.render('upcomingEvents',{name: req.cookies.userData.name,eve: "no Events"});
+        else if(docs.length==0) res.render('upcomingEvents',{name: req.cookies.userData.name,eve:"no Events"});
         else{
             EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 if(err) console.log(err);
@@ -319,7 +319,7 @@ app.get("/upcomingEvent",(req,res)=>{
                         arr.push(temp1);
                     }
                     // console.log(docs);
-                    res.render('upcomingEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr});
+                    res.render('upcomingEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr,eve:""});
                 })
             })
         }
@@ -363,7 +363,7 @@ app.get("/liveEvents",(req,res)=>{
                         arr.push(temp1);
                     }
                     // console.log(docs);
-                    res.render('liveEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr});
+                    res.render('liveEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr,eve:""});
                 })
 
             })
@@ -407,7 +407,7 @@ app.get("/endedEvents",(req,res)=>{
                         arr.push(temp1);
                     }
                     // console.log(docs);
-                    res.render('endedEvent',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr});
+                    res.render('endedEvent',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr,eve:""});
                 })
 
             })
@@ -452,7 +452,7 @@ app.get('/regEvents',(req,res)=>{
                         arr.push(temp1);
                     }
                     // console.log(docs);
-                    res.render('regEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr});
+                    res.render('regEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr,eve:""});
                 })
             })
         }
@@ -497,13 +497,13 @@ app.get('/catEve',(req,res)=>{
                         // arr[docs[i].id] = temp.length;
                         arr.push(temp1);
                     }
-                    res.render('categories_events',{name: req.cookies.userData.name,EventData: docs,categorie: req.query.name,arr:arr});
+                    res.render('categories_events',{name: req.cookies.userData.name,EventData: docs,categorie: req.query.name,arr:arr,eve:""});
                 })
 
             })
         }
         else{
-            res.render('categories_events',{name: req.cookies.userData.name,EventData: docs,categorie: req.query.name});
+            res.render('categories_events',{name: req.cookies.userData.name,EventData: docs,categorie: req.query.name,eve:""});
         }
     })
 })
@@ -519,7 +519,7 @@ app.get('/adminEvents',(req,res)=>{
         else if(data.length===0) res.render('admin/yourEvents',{adminEmail:req.cookies.userDataAdmin.name,eve: "no Events"});
 
         else{
-            res.render('admin/yourEvents',{adminEmail:req.cookies.userDataAdmin.name,EventData: data});
+            res.render('admin/yourEvents',{adminEmail:req.cookies.userDataAdmin.name,EventData: data,eve:""});
         }
     })
 })
