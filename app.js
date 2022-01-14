@@ -210,8 +210,10 @@ app.get("/allEvents",(req,res)=>{
 
     Event.find((err,docs)=>{
         if(err) console.log(err);
+        else if(docs.length===0) res.render('allEvents',{name: req.cookies.userData.name,eve: "no Events"});
+
         else{
-            EventReg.find({email : email},(err,data)=>{
+            EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 if(err) console.log(err);
                 else{
                     // console.log(data);
@@ -244,7 +246,7 @@ app.get("/allEvents",(req,res)=>{
                     }
                     // console.log(arr);
                     // console.log(docs);
-                    res.render('allEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr});
+                    res.render('allEvents',{name: req.cookies.userData.name,EventData: docs,registerEvents: data,arr:arr,eve:""});
                 })
             })
         }
@@ -283,8 +285,9 @@ app.get("/upcomingEvent",(req,res)=>{
 
     Event.find((err,docs)=>{
         if(err) console.log(err);
+        else if(docs.length===0) res.render('upcomingEvents',{name: req.cookies.userData.name,eve: "no Events"});
         else{
-            EventReg.find({email : email},(err,data)=>{
+            EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 if(err) console.log(err);
                 EventReg.find((err,evenRegData)=>{
                     if(err) console.log(err);
@@ -302,7 +305,7 @@ app.get("/upcomingEvent",(req,res)=>{
                         }
                     }
                     var arr=[];
-                    console.log(docs[0].id);
+                    // console.log(docs[0].id);
                     for(var i=0;i<docs.length;i++){
                         var temp = evenRegData.filter((item)=>{
                             return item.eventID ===docs[i].id ;
@@ -327,9 +330,13 @@ app.get("/liveEvents",(req,res)=>{
     if(!req.cookies.userData) res.redirect("/");
 
     Event.find((err,docs)=>{
+        
+
         if(err) console.log(err);
+        else if(docs.length===0) res.render('liveEvents',{name: req.cookies.userData.name,eve: "no Events"});
+
         else{
-            EventReg.find({email : email},(err,data)=>{
+            EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 EventReg.find((err,evenRegData)=>{
                     if(err) console.log(err);
                     for(let i=0;i<docs.length;i++){
@@ -369,8 +376,10 @@ app.get("/endedEvents",(req,res)=>{
 
     Event.find((err,docs)=>{
         if(err) console.log(err);
+        else if(docs.length===0) res.render('endedEvent',{name: req.cookies.userData.name,eve: "no Events"});
+
         else{
-            EventReg.find({email : email},(err,data)=>{
+            EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 EventReg.find((err,evenRegData)=>{
                     if(err) console.log(err);            
                     for(let i=0;i<docs.length;i++){
@@ -412,8 +421,10 @@ app.get('/regEvents',(req,res)=>{
 
     Event.find((err,docs)=>{
         if(err) console.log(err);
+        else if(docs.length===0) res.render('regEvents',{name: req.cookies.userData.name,eve: "no Events"});
+
         else{
-            EventReg.find({email : email},(err,data)=>{
+            EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 EventReg.find((err,evenRegData)=>{
                     if(err) console.log(err);            
                     for(let i=0;i<docs.length;i++){
@@ -453,8 +464,10 @@ app.get('/catEve',(req,res)=>{
 
     Event.find({categories:req.query.name},(err,docs)=>{
         if(err) console.log(err);
+        else if(docs.length===0) res.render('categories_events',{name: req.cookies.userData.name,eve: "no Events",categorie: req.query.name});
+
         else if(docs.length>0){
-            EventReg.find({email : email},(err,data)=>{
+            EventReg.find({email : req.cookies.userData.email},(err,data)=>{
                 EventReg.find((err,evenRegData)=>{
                     if(err) console.log(err);
                     else{
@@ -501,7 +514,10 @@ app.get('/adminEvents',(req,res)=>{
 
     
     Event.find({adminEmail: req.cookies.userDataAdmin.name},(err,data)=>{
+
         if(err) console.log(err);
+        else if(data.length===0) res.render('admin/yourEvents',{adminEmail:req.cookies.userDataAdmin.name,eve: "no Events"});
+
         else{
             res.render('admin/yourEvents',{adminEmail:req.cookies.userDataAdmin.name,EventData: data});
         }

@@ -1,7 +1,9 @@
 <head>
     <link rel="stylesheet" href="css/eventCards1.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />        <script src="https://cdn.lordicon.com/libs/mssddfmo/lord-icon-2.1.0.js"></script>
+
+        
 </head>
 
 <%- include('adminHeader'); %>
@@ -200,9 +202,18 @@
         #curent {
             color: black;
         }
+        .noEve{
+            text-align: center;
+            color: white;
+        }
     </style>
 
-
+<% if(eve === "no Events") {%>
+    <div class="noEve">
+        <lord-icon src="https://cdn.lordicon.com/cvpqeffe.json" trigger="loop" colors="primary:#ffffff,secondary:#5a189a" style="width:250px;height:250px"> </lord-icon>
+        <h1>No Events found!, Create one</h1>
+</div>
+<% } else{%>
 
 
 
@@ -398,6 +409,11 @@
             </div>
         </div>
     </div>
+    <%}%>
+    <div class=imgCon data-toggle="tooltip" title="Disabled tooltip" data-placement="bottom">
+        <img src="/images/addIcon.png" alt="img" data-toggle="modal" data-target="#addevent" />
+    </div>
+
     <%- include('registerForm'); %>
 
 
