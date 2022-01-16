@@ -146,7 +146,7 @@ app.post("/addEvent",async(req,res)=>{
     if(!req.cookies.userData) res.redirect("/");
 
     const v1 = new Event({
-        adminEmail:req.cookies.userDataAdmin.name,
+        adminEmail:req.cookies.userDataAdmin.email,
         eventName: req.body.eventName,
         eventDec: req.body.eventDec,
         eventCat:req.body.eventCat,
