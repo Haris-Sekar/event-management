@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
+import passport from 'passport';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import nodemailer from 'nodemailer';
@@ -19,12 +20,12 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use('/docs',express.static(path.join(__dirname,'docs')));
-const userDetailsSchema = new mongoose.Schema({
+ const userDetailsSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: Object,
 });
-const userDet = mongoose.model("userDetails",userDetailsSchema);
+export const userDet = mongoose.model("userDetails",userDetailsSchema);
 const adminDet = new mongoose.Schema({
     intitutionName: String,
     email: String,
@@ -103,7 +104,19 @@ app.post('/',(req,res)=>{
                 }
         });
     });
-})
+});
+import './authendicate.js';
+import {cookObj} from './authendicate.js';
+
+app.get('/google',passport.authenticate('google',{scope: ['profile','email']}));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+    //res.redirect('/');
+    // console.log(profile);
+    console.log(cookObj);
+    res.cookie("userData",cookObj,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+    // res.end('Logged in!');
+    res.redirect('/home');
+  })
 app.get('/home',(req,res)=>{
     if(!req.cookies.userData) res.redirect("/");
     else res.render('index',{name: req.cookies.userData.name})
