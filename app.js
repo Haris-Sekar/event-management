@@ -12,6 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import nodemailer from 'nodemailer';
 import xl from 'excel4node';
+import XLSX from 'xlsx';
 const saltRounds = 10;
 const app = express();
 app.use(cookieParser());
@@ -605,13 +606,29 @@ app.get('/EventRegDet',(req,res)=>{
                 rowIndex++;
             });
             
-            var filePath = "http://localhost:5000/docs/"+req.query.id+".xlsx";
+            var filePath = "https://eve-mnag.herokuapp.com/docs/"+req.query.id+".xlsx";
             wb.write('docs/'+req.query.id+'.xlsx');
             // console.log(filePath);
             res.render('admin/EventRegDet',{adminEmail:req.cookies.userDataAdmin.name ,regDet:regDet,path: filePath});
         }        
     })
 })
+app.post('/exportdata',(req,res)=>{
+    var wb = XLSX.utils.book_new(); //new workbook
+    EventReg.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }else{
+            var temp = JSON.stringify(data);
+            temp = JSON.parse(temp);
+            var ws = XLSX.utils.json_to_sheet(temp);
+            var down = __dirname+'/public/exportdata.xlsx'
+           XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+           XLSX.writeFile(wb,down);
+           res.download(down);
+        }
+    });
+});
 const port = process.env.PORT || 5000;
 mongoose.connect(process.env.URL, {useNewUrlParser : true, useUnifiedTopology: true})
     .then( () => app.listen(port, () => console.log(`Serve running on port ${port}`)))

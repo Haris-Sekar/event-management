@@ -63,10 +63,15 @@
         .card {
             margin: 20px;
             padding: 20px;
-            padding-bottom: 20%;
+            /* padding-bottom: 50%; */
             width: 500px;
-            /* min-height: 200px; */
-            display: grid;
+            max-height: fit-content;
+            /* display: grid; */
+            height:auto;
+            /* position: absolute; */
+            height: 100%;
+            /* overflow: hidden; */
+
             /* grid-template-rows: 20px 50px 1fr 50px; */
             border-radius: 10px;
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
@@ -206,7 +211,8 @@
             color: white;
         }
     </style>
-    <% if(eve === "no Events") {%>
+    <% var flag = 0; 
+    if(eve === "no Events") {%>
         <div class="noEve">
             <lord-icon src="https://cdn.lordicon.com/cvpqeffe.json" trigger="loop" colors="primary:#ffffff,secondary:#5a189a" style="width:250px;height:250px"> </lord-icon>
             <h1>No Events found</h1>
@@ -228,12 +234,13 @@
             else reg=0;
             if(eventStartDate < today && eventEndDate> today){
                 type="Current";
+                flag = 1;
                 }
                 else if(eventStartDate > today){
                 type = "Upcoming";
                 }else if(eventEndDate<today){ type="Ended" ; }%>
 
-                    <% if(type==="Current" ){%>
+                    <% if(type==="Current"){%>
                         <div class="card card-1" id="">
                             <span id="tit" style="text-align: left;">
                                 <%=type %> Event,<%= EventData[i].categories%>
@@ -281,6 +288,13 @@
                         <%}}%>
     </div>
     </div>
+    <%}
+    
+    if(flag === 0){%>
+        <div class="noEve">
+            <lord-icon src="https://cdn.lordicon.com/cvpqeffe.json" trigger="loop" colors="primary:#ffffff,secondary:#5a189a" style="width:250px;height:250px"> </lord-icon>
+            <h1>No Events found</h1>
+    </div>
     <%}%>
-
+    <%= flag%>
     <%- include('registerForm'); %>
