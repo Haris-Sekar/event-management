@@ -291,7 +291,7 @@ button#logbutton:hover {
     50% {background-position:0 -100%,0 0}
   }
 
-  .explore img{
+  .explore .rocketImg{
     width: 400px;
     height: 400px;
     /* right: 10px; */
@@ -300,6 +300,14 @@ button#logbutton:hover {
     position:absolute;
     right: 20px;
     
+  }
+  .explore .studImg{
+    width: 500px;
+    height: 500px;
+    margin-top: -100px;
+    margin-left: 100px;
+    animation: 2s ease-in-out 0s 1 fade1;
+
   }
   .explore div{
     display: flex;
@@ -330,6 +338,19 @@ button#logbutton:hover {
     }
     50%{
       margin-left: 700px;
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+  @keyframes fade1{
+    0%{
+        /* float: left; */
+        /* bottom: 10px; */
+        opacity: 0;
+    }
+    50%{
         opacity: 0.5;
     }
     100%{

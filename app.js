@@ -68,7 +68,7 @@ app.post('/adminLogin',(req,res)=>{
 })
 
 app.get('/',(req,res)=>{
-    res.render('login');
+    res.render('login',{err: 'none'});
 
 
 });
@@ -88,43 +88,44 @@ var name;
 var email;
 app.post('/',(req,res)=>{
     userDet.findOne({email: req.body.email},(err,user)=>{
-        name = user.name;
-        email = req.body.email;
-        bcrypt.compare(req.body.password, user.password).then(function(result) {
-            if(result===true){
-                process.env.isLoged = "true";   
-                cookieObj.email=email;
-                cookieObj.name=name;
-                res.cookie("userData",cookieObj,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
-                res.redirect("/home");
+        if(err) console.log(err);
+        else if(!user) res.render('login',{err: "failed"})
+        else { 
+            name = user.name;
+            email = req.body.email;
+            bcrypt.compare(req.body.password, user.password).then(function(result) {
+                if(result===true){
+                    process.env.isLoged = "true";   
+                    cookieObj.email=email;
+                    cookieObj.name=name;
+                    res.cookie("userData",cookieObj,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
+                    res.redirect("/home");
 
-            }
-                else{
-                    cookieObj.code=false;
-                    res.redirect('/');
                 }
-        });
+                    else{
+                        cookieObj.code=false;
+                        res.render('login',{err : "failed"});
+                    }
+            });
+        }
     });
 });
 import './authendicate.js';
 import {cookObj} from './authendicate.js';
 
 app.get('/google',passport.authenticate('google',{scope: ['profile','email']}));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/loginGoogleFailed' }), (req, res) => {
     //res.redirect('/');
     // console.log(profile);
     console.log(cookObj);
     res.cookie("userData",cookObj,{ maxAge: 2 * 60 * 60 * 1000, httpOnly: true });
     // res.end('Logged in!');
     res.redirect('/home');
+  });
+  app.get('/loginGoogleFailed',(req,res)=>{
+      res.render('login',{err: "failed"});
   })
-app.get('/home',(req,res)=>{
-    if(!req.cookies.userData) res.redirect("/");
-    else res.render('index',{name: req.cookies.userData.name})
-});
-
-
-const addEventSchema = new mongoose.Schema({
+  const addEventSchema = new mongoose.Schema({
     adminEmail: String,
     eventName: String,
     eventDec: String,
@@ -143,8 +144,24 @@ const addEventSchema = new mongoose.Schema({
 });
 const Event = mongoose.model("Event",addEventSchema);
 
-app.post("/addEvent",async(req,res)=>{
+app.get('/home',(req,res)=>{
+
+
+
     if(!req.cookies.userData) res.redirect("/");
+    else{
+        Event.find((err,data)=>{
+            if(err) console.log(err);
+            res.render('index',{name: req.cookies.userData.name,Events: data});
+        })
+
+    }
+});
+
+
+
+app.post("/addEvent",async(req,res)=>{
+    if(!req.cookies.userDataAdmin) res.redirect("/adminLogin");
 
     const v1 = new Event({
         adminEmail:req.cookies.userDataAdmin.email,
@@ -606,7 +623,7 @@ app.get('/EventRegDet',(req,res)=>{
                 rowIndex++;
             });
             
-            var filePath = "https://eve-mnag.herokuapp.com/docs/"+req.query.id+".xlsx";
+            var filePath = "http://localhost:5000/docs/"+req.query.id+".xlsx";
             wb.write('docs/'+req.query.id+'.xlsx');
             // console.log(filePath);
             res.render('admin/EventRegDet',{adminEmail:req.cookies.userDataAdmin.name ,regDet:regDet,path: filePath});
