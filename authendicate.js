@@ -19,7 +19,7 @@ const callBackurl1 = "http://localhost:5000/auth/google/callback";
 passport.use(new GoogleStrategy({
     clientID:'436514693418-q8inimkodj9qoit8fm8v5kmh94thjh54.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL: callBackurl1,
+    callbackURL: callBackurl,
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
