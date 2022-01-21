@@ -266,6 +266,24 @@ button#logbutton:hover {
 
 
   }
+  .userDet{
+    /* width: ; */
+    border: 2px solid #eeee;
+    background-color: #eeee;
+    border-radius: 15px;
+  font-family: 'Anonymous Pro', monospace;
+    margin: 50px 10px 0 10px;
+    height: 500px;
+    box-shadow: 10px 10px 10px 3px rgba(87, 84, 84, 0.933);
+    /* width: fit-content; */
+    text-align: center;
+
+  }
+  .userDet img{
+    width: 150px;
+    height: 150px;
+    margin: 50px;
+  }
   .explore h1{
     font-size: 30px;
     margin: 50px;

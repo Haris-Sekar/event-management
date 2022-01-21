@@ -403,6 +403,16 @@ h1 {
 });
 </script>
 <%}%>
+<%if(err === 'fal1'){%>
+<script>
+  toastsHandler.createToast({
+    type: 'error',
+    icon: 'exclamation-circle',
+    message: 'Opps email already registered!',
+    duration: 5000
+});
+</script>
+<%}%>
 <script>
 $('.toast').toast('show')
 const toggleForm = () => {

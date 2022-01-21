@@ -23,7 +23,11 @@ app.use(express.static("public"));
 app.use('/docs',express.static(path.join(__dirname,'docs')));
  const userDetailsSchema = new mongoose.Schema({
     name: String,
-    email: String,
+    email: {
+        type:String,
+        unique:true,
+        required:true
+    },
     password: Object,
 });
 export const userDet = mongoose.model("userDetails",userDetailsSchema);
@@ -73,16 +77,24 @@ app.get('/',(req,res)=>{
 
 });
 app.post('/signup',(req,res)=>{
-    bcrypt.hash(req.body.password, 10, function(err, hash) {
-        const signupVal = new userDet({
-            name: req.body.name,
-            email: req.body.email,
-            password: hash
-        });
-        signupVal.save();
-        res.redirect('/');
-    });
-    
+
+    userDet.findOne({email:req.body.email},(err,data)=>{
+        if(err) console.log(err);
+        else{
+            if(data!=null) res.render('login',{err:"fal1"});
+            else{
+                bcrypt.hash(req.body.password, 10, function(err, hash) {
+                    const signupVal = new userDet({
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: hash
+                    });
+                    signupVal.save();
+                    res.redirect('/');
+                });
+            }
+        }        
+    })
 })
 var name;
 var email;
@@ -206,7 +218,7 @@ app.get('/admin',async (req,res)=>{
         Upcomming: 0,
         completed: 0,
     }
-    Event.find({adminEmail: req.cookies.userDataAdmin.name},(err, docs) => {
+    Event.find({adminEmail: req.cookies.userDataAdmin.email},(err, docs) => {
         if (!err) {
             for(var i=0;i<docs.length;i++){
             EventDatas.events=docs.length;
@@ -544,7 +556,7 @@ app.get('/adminEvents',(req,res)=>{
     if(!req.cookies.userDataAdmin) res.redirect("admin/adminLogin");
 
     
-    Event.find({adminEmail: req.cookies.userDataAdmin.name},(err,data)=>{
+    Event.find({adminEmail: req.cookies.userDataAdmin.email},(err,data)=>{
 
         if(err) console.log(err);
         else if(data.length===0) res.render('admin/yourEvents',{adminEmail:req.cookies.userDataAdmin.name,eve: "no Events"});
@@ -567,7 +579,7 @@ app.post('/adminSignup',(req,res)=>{
             password: hash,
         });
         signupVal.save();
-        res.redirect('/');
+        res.redirect('/adminLogin');
     });
 })
 app.post('/deleteEvent',(req,res)=>{
@@ -646,6 +658,13 @@ app.post('/exportdata',(req,res)=>{
         }
     });
 });
+
+app.get('/userAccount',(req,res)=>{
+    res.render('userAccount',{name: req.cookies.userData.name,email: req.cookies.userData.email});
+
+})
+
+
 const port = process.env.PORT || 5000;
 mongoose.connect(process.env.URL, {useNewUrlParser : true, useUnifiedTopology: true})
     .then( () => app.listen(port, () => console.log(`Serve running on port ${port}`)))
